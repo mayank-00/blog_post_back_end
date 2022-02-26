@@ -7,12 +7,13 @@ const bodyParser = require("body-parser");
 
 const appConfig = require("./config/app");
 
-const username = "mayank";
-const password = "Mayank%40mongo00";
-const cluster = "cluster0.rjisx";
-const dbname = "blog_post";
+const username = appConfig.DB_USER;
+const password = appConfig.DB_PASSWORD;
+const cluster = appConfig.DB_CLUSTER;
+const dbname = appConfig.DB_NAME;
 
-console.log("ppConfig.DATABASE_USER ", appConfig.DATABASE_USER)
+console.log("username ", username, " password ", password, " cluster ", cluster, " dbname ", dbname)
+
 const uri = `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbname}?retryWrites=true&w=majority`;
 
 mongoose.connect(uri, {
@@ -49,7 +50,7 @@ app.use("/", routes);
 
 // app.use("/api/v1", [routes]);
 
-const port = appConfig.APP_PORT || 4546;
+const port = appConfig.PORT;
 app.listen(port, function () {
   console.log(`listening on *:${port}`);
 });

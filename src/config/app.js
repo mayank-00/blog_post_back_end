@@ -1,10 +1,21 @@
-require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
+const dotenv = require("dotenv")
+const _ = require('lodash');
 
-module.exports = {
-  DATABASE_NAME: process.env.DB_NAME,
-  DATABASE_USER: process.env.DB_USER,
-  DATABASE_PASSWORD: process.env.DB_PASSWORD,
-  APP_PORT: process.env.PORT,
-  BODY_PARSER_LIMIT: process.env.BODY_PARSER_LIMIT,
-  BODY_PARAMETER_LIMIT: Number(process.env.BODY_PARAMETER_LIMIT),
+const result = dotenv.config();
+
+let envs = null
+
+if (!('error' in result)) {
+  envs = result.parsed
+
+  if (!envs.PORT) {
+    envs.PORT = 4546
+  }
+} else {
+  envs = {};
+  _.each(process.env, (value, key) => envs[key] = value);
 }
+
+console.log("dotenv ", envs)
+
+module.exports = envs
